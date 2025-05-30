@@ -62,7 +62,7 @@ const ProfileButton = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdf9f4',
+    backgroundColor: '#1A1A1A',
   },
   avatarContainer: {
     alignItems: 'center',
@@ -78,21 +78,21 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: '500',
-    color: COLORS.black,
+    color: COLORS.white,
   },
   buttonsContainer: {
     marginTop: 24,
     paddingHorizontal: 16,
   },
   button: {
-    backgroundColor: COLORS.white,
+    backgroundColor: '#2A2A2A',
     borderRadius: 18,
     marginBottom: 18,
     shadowColor: '#000',
-    shadowOpacity: 0.04,
+    shadowOpacity: 0.2,
     shadowRadius: 8,
     shadowOffset: {width: 0, height: 2},
-    elevation: 2,
+    elevation: 4,
   },
   buttonContent: {
     flexDirection: 'row',
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   buttonLabel: {
     flex: 1,
     fontSize: 18,
-    color: COLORS.black,
+    color: COLORS.white,
     fontWeight: '600',
   },
   arrowIcon: {

@@ -1,10 +1,15 @@
+import {IMAGES} from '../constants/images';
+
 export const courtsData = [
   {
     id: '1',
     name: 'Central Padel Club',
-    address: '123 Main St',
-    image:
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    address: 'Calle Mayor 123, Madrid',
+    location: {
+      latitude: 40.4168,
+      longitude: -3.7038,
+    },
+    image: IMAGES.img1,
     workingHours: 'Mon-Fri: 8:00-22:00, Sat-Sun: 9:00-20:00',
     available: true,
     rating: 4.5,
@@ -20,9 +25,12 @@ export const courtsData = [
   {
     id: '2',
     name: 'Greenfield Courts',
-    address: '456 Elm St',
-    image:
-      'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80',
+    address: 'Avinguda Diagonal 456, Barcelona',
+    location: {
+      latitude: 41.3851,
+      longitude: 2.1734,
+    },
+    image: IMAGES.img2,
     workingHours: 'Mon-Fri: 7:00-21:00, Sat-Sun: 8:00-19:00',
     available: false,
     rating: 4.2,
@@ -33,9 +41,12 @@ export const courtsData = [
   {
     id: '3',
     name: 'Riverside Padel',
-    address: '789 Pine St',
-    image:
-      'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80',
+    address: 'Paseo del Río 789, Valencia',
+    location: {
+      latitude: 39.4699,
+      longitude: -0.3763,
+    },
+    image: IMAGES.img3,
     workingHours: 'Mon-Sun: 8:00-23:00',
     available: true,
     rating: 4.8,
@@ -46,9 +57,12 @@ export const courtsData = [
   {
     id: '4',
     name: 'Sunset Tennis Center',
-    address: '321 Sunset Blvd',
-    image:
-      'https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=800&q=80',
+    address: 'Calle Sevilla 321, Málaga',
+    location: {
+      latitude: 36.7213,
+      longitude: -4.4217,
+    },
+    image: IMAGES.img4,
     workingHours: 'Mon-Fri: 9:00-21:00, Sat-Sun: 10:00-18:00',
     available: true,
     rating: 4.0,
@@ -59,9 +73,12 @@ export const courtsData = [
   {
     id: '5',
     name: 'Lakeside Rackets',
-    address: '654 Lakeview Dr',
-    image:
-      'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80',
+    address: 'Paseo Marítimo 654, Palma de Mallorca',
+    location: {
+      latitude: 39.5696,
+      longitude: 2.6502,
+    },
+    image: IMAGES.img5,
     workingHours: 'Mon-Sun: 7:00-20:00',
     available: false,
     rating: 3.9,
@@ -72,9 +89,12 @@ export const courtsData = [
   {
     id: '6',
     name: 'Mountainview Sports',
-    address: '987 Hilltop Rd',
-    image:
-      'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80',
+    address: 'Calle Sierra Nevada 987, Granada',
+    location: {
+      latitude: 37.1773,
+      longitude: -3.5986,
+    },
+    image: IMAGES.img6,
     workingHours: 'Mon-Fri: 8:00-22:00, Sat-Sun: 9:00-21:00',
     available: true,
     rating: 4.3,
@@ -85,9 +105,12 @@ export const courtsData = [
   {
     id: '7',
     name: 'City Center Courts',
-    address: '159 City Center Ave',
-    image:
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    address: 'Plaza Mayor 159, Salamanca',
+    location: {
+      latitude: 40.9647,
+      longitude: -5.663,
+    },
+    image: IMAGES.img7,
     workingHours: 'Mon-Sun: 8:00-22:00',
     available: true,
     rating: 4.6,
@@ -98,9 +121,12 @@ export const courtsData = [
   {
     id: '8',
     name: 'Forest Edge Club',
-    address: '753 Forest Ln',
-    image:
-      'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80',
+    address: 'Avenida de la Constitución 753, Sevilla',
+    location: {
+      latitude: 37.3891,
+      longitude: -5.9845,
+    },
+    image: IMAGES.img8,
     workingHours: 'Mon-Fri: 8:00-20:00, Sat-Sun: 9:00-18:00',
     available: false,
     rating: 4.1,

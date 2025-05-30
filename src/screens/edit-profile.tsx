@@ -19,6 +19,8 @@ import {Button} from '../components/button';
 import {PencilIcon} from '../assets/svg/pencil-icon';
 import {ArrowLeftIcon} from '../assets/svg/arrow-left-icon';
 import {useNavigation} from '@react-navigation/native';
+import DropDownPicker from 'react-native-dropdown-picker';
+import {skillLevels} from '../data/levels';
 
 const PROFILE_STORAGE_KEY = 'user_profile';
 const screenWidth = Dimensions.get('window').width;
@@ -29,6 +31,9 @@ export const EditProfileScreen = () => {
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [localAvatarUri, setLocalAvatarUri] = useState<string | null>(null);
+  const [skillLevel, setSkillLevel] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState(skillLevels);
   const height = useSafeAreaInsets().top;
   const navigation = useNavigation();
 
@@ -42,6 +47,7 @@ export const EditProfileScreen = () => {
           setLastName(profile.lastName || '');
           setEmail(profile.email || '');
           setLocalAvatarUri(profile.avatarUri || null);
+          setSkillLevel(profile.skillLevel || null);
         }
       } catch (error) {
         console.error('Failed to load profile data from storage', error);
@@ -64,25 +70,19 @@ export const EditProfileScreen = () => {
   };
 
   const handleSave = async () => {
-    if (name.trim() || lastName.trim() || localAvatarUri) {
-      try {
-        const profile = {
-          name: name.trim(),
-          lastName: lastName.trim(),
-          email: email.trim(),
-          avatarUri: localAvatarUri,
-        };
-        await AsyncStorage.setItem(
-          PROFILE_STORAGE_KEY,
-          JSON.stringify(profile),
-        );
-        Alert.alert('Profile Updated');
-      } catch (error) {
-        Alert.alert('Error', 'Failed to save profile data');
-        console.error('Failed to save profile data to storage', error);
-      }
-    } else {
-      Alert.alert('Error', 'Please enter valid data');
+    try {
+      const profile = {
+        name: name.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
+        avatarUri: localAvatarUri,
+        skillLevel: skillLevel,
+      };
+      await AsyncStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profile));
+      Alert.alert('Profile Updated');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to save profile data');
+      console.error('Failed to save profile data to storage', error);
     }
   };
 
@@ -92,6 +92,7 @@ export const EditProfileScreen = () => {
       setLastName('');
       setEmail('');
       setLocalAvatarUri(null);
+      setSkillLevel(null);
 
       await AsyncStorage.removeItem(PROFILE_STORAGE_KEY);
       Alert.alert('Profile Deleted', 'All fields have been cleared.');
@@ -146,7 +147,7 @@ export const EditProfileScreen = () => {
                 onChangeText={setName}
                 placeholderTextColor={COLORS.greyPrimary}
               />
-              <PencilIcon color={COLORS.black} />
+              <PencilIcon color="#21706A" />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
@@ -156,7 +157,7 @@ export const EditProfileScreen = () => {
                 onChangeText={setLastName}
                 placeholderTextColor={COLORS.greyPrimary}
               />
-              <PencilIcon color={COLORS.black} />
+              <PencilIcon color="#21706A" />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
@@ -166,7 +167,25 @@ export const EditProfileScreen = () => {
                 onChangeText={setEmail}
                 placeholderTextColor={COLORS.greyPrimary}
               />
-              <PencilIcon color={COLORS.black} />
+              <PencilIcon color="#21706A" />
+            </View>
+            <View style={styles.dropdownContainer}>
+              <DropDownPicker
+                open={open}
+                value={skillLevel}
+                items={items}
+                setOpen={setOpen}
+                setValue={setSkillLevel}
+                setItems={setItems}
+                style={styles.dropdown}
+                textStyle={styles.dropdownText}
+                placeholder="Select your skill level"
+                placeholderStyle={styles.dropdownPlaceholder}
+                dropDownContainerStyle={styles.dropdownList}
+                zIndex={3000}
+                zIndexInverse={1000}
+                theme="DARK"
+              />
             </View>
           </View>
           <View style={styles.buttonsContainer}>
@@ -187,7 +206,7 @@ export const EditProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdf9f4',
+    backgroundColor: '#1A1A1A',
   },
   header: {
     flexDirection: 'row',
@@ -205,7 +224,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: '500',
-    color: COLORS.black,
+    color: COLORS.white,
   },
   scrollContent: {
     flexGrow: 1,
@@ -224,16 +243,16 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#E6F7F6',
+    backgroundColor: '#2C2C2C',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
   },
   editAvatarButton: {
     borderWidth: 2,
-    borderColor: COLORS.white,
+    borderColor: '#1A1A1A',
     borderRadius: 50,
-    backgroundColor: '#4EC6B7',
+    backgroundColor: '#21706A',
     padding: 7,
     position: 'absolute',
     bottom: 10,
@@ -245,7 +264,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: '500',
     fontSize: 24,
-    color: COLORS.black,
+    color: COLORS.white,
     marginBottom: 24,
   },
   inputsContainer: {
@@ -254,7 +273,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: '#2C2C2C',
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 12,
@@ -262,13 +281,38 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 45,
+    height: 30,
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.white,
   },
   buttonsContainer: {
     gap: 10,
     marginTop: 32,
     marginBottom: 24,
+  },
+  dropdownContainer: {
+    marginBottom: 24,
+    zIndex: 1000,
+  },
+  dropdown: {
+    backgroundColor: '#2C2C2C',
+    borderColor: '#2C2C2C',
+    borderRadius: 12,
+    height: 40,
+  },
+  dropdownText: {
+    color: COLORS.white,
+    fontSize: 16,
+  },
+  dropdownPlaceholder: {
+    color: COLORS.greyPrimary,
+  },
+  dropdownList: {
+    backgroundColor: '#2C2C2C',
+    borderColor: '#2C2C2C',
+    borderRadius: 12,
+  },
+  dropdownArrow: {
+    tintColor: COLORS.greyPrimary,
   },
 });

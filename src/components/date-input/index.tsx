@@ -52,7 +52,7 @@ export const DateInput = ({
     return `${format(value, dateFormat)} ${format(value, timeFormat)}`;
   };
 
-  const textColor = value ? COLORS.black : COLORS.greyPrimary;
+  const textColor = value ? COLORS.white : COLORS.greyPrimary;
   const displayText = getDisplayText();
 
   return (

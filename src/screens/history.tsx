@@ -10,34 +10,10 @@ import {
 } from 'react-native';
 import {IMAGES} from '../constants/images';
 import {ArrowLeftIcon} from '../assets/svg/arrow-left-icon';
-import {COLORS} from '../constants/colors';
 import {useNavigation} from '@react-navigation/native';
+import {GAME_HISTORY, Game, GameResult} from '../data/history';
 
-const mockGames = [
-  {
-    id: '1',
-    date: 'May 27, 2025',
-    opponents: 'Carlos & Diego',
-    result: 'Won',
-    score: '6-4, 3-6, 7-5',
-  },
-  {
-    id: '2',
-    date: 'May 25, 2025',
-    opponents: 'Maria & Ana',
-    result: 'Lost',
-    score: '4-6, 2-6',
-  },
-  {
-    id: '3',
-    date: 'May 20, 2025',
-    opponents: 'Juan & Pedro',
-    result: 'Canceled',
-    score: null,
-  },
-];
-
-const ResultChip = ({result}: {result: string}) => {
+const ResultChip = ({result}: {result: GameResult}) => {
   const getChipStyle = () => {
     switch (result.toLowerCase()) {
       case 'won':
@@ -58,13 +34,13 @@ const ResultChip = ({result}: {result: string}) => {
   );
 };
 
-const GameItem = ({game}: {game: (typeof mockGames)[0]}) => (
+const GameItem = ({game}: {game: Game}) => (
   <View style={styles.gameItem}>
     <View style={styles.gameHeader}>
       <Text style={styles.date}>{game.date}</Text>
       <ResultChip result={game.result} />
     </View>
-    <Text style={styles.opponents}>vs. {game.opponents}</Text>
+    <Text style={styles.opponents}>vs. {game.opponents.join(' & ')}</Text>
     {game.score && <Text style={styles.score}>{game.score}</Text>}
   </View>
 );
@@ -94,7 +70,7 @@ export const HistoryScreen = () => {
         <Text style={styles.headerTitle}>Game History</Text>
       </View>
       <FlatList
-        data={mockGames}
+        data={GAME_HISTORY}
         renderItem={({item}) => <GameItem game={item} />}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContainer}
@@ -107,12 +83,12 @@ export const HistoryScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdf9f4',
+    backgroundColor: '#1a1a1a',
   },
   title: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#e2e8f0',
     textAlign: 'center',
     marginVertical: 20,
   },
@@ -121,7 +97,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   gameItem: {
-    backgroundColor: 'white',
+    backgroundColor: '#2d2d2d',
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
@@ -130,9 +106,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 2,
-    elevation: 2,
+    elevation: 3,
   },
   gameHeader: {
     flexDirection: 'row',
@@ -142,17 +118,17 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 16,
-    color: '#64748b',
+    color: '#94a3b8',
   },
   opponents: {
     fontSize: 18,
     fontWeight: '500',
-    color: '#1e293b',
+    color: '#e2e8f0',
     marginBottom: 4,
   },
   score: {
     fontSize: 16,
-    color: '#64748b',
+    color: '#94a3b8',
   },
   chip: {
     paddingHorizontal: 12,
@@ -171,7 +147,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ef4444',
   },
   canceledChip: {
-    backgroundColor: '#94a3b8',
+    backgroundColor: '#64748b',
   },
   emptyState: {
     flex: 1,
@@ -181,13 +157,13 @@ const styles = StyleSheet.create({
   },
   emptyStateText: {
     fontSize: 18,
-    color: '#64748b',
+    color: '#94a3b8',
     marginTop: 16,
   },
   emptyImage: {
     width: 220,
     height: 180,
-    tintColor: '#c7d3d1',
+    tintColor: '#4a4a4a',
   },
   header: {
     flexDirection: 'row',
@@ -206,6 +182,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: '500',
-    color: COLORS.black,
+    color: '#e2e8f0',
   },
 });

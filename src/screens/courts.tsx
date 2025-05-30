@@ -10,7 +10,6 @@ import React, {useState} from 'react';
 import {IMAGES} from '../constants/images';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SearchInput} from '../components/search-input';
-import {COLORS} from '../constants/colors';
 import {courtsData} from '../data/courts';
 import {ArrowRightIcon} from '../assets/svg/arrow-right-icon';
 import {useNavigation} from '@react-navigation/native';
@@ -55,7 +54,7 @@ export const CourtsScreen = () => {
               onPress={() =>
                 navigation.navigate('CourtDetails', {courtId: item.id})
               }>
-              <Image source={{uri: item.image}} style={styles.cardImage} />
+              <Image source={item.image} style={styles.cardImage} />
               <View style={styles.cardInfo}>
                 <Text style={styles.cardTitle}>{item.name}</Text>
                 <Text style={styles.cardAddress}>{item.address}</Text>
@@ -72,14 +71,14 @@ export const CourtsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdf9f4',
+    backgroundColor: '#1A1A1A',
     paddingTop: 32,
     paddingHorizontal: 16,
   },
   title: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#222',
+    color: '#E0E0E0',
     marginBottom: 16,
   },
   listContent: {
@@ -90,14 +89,14 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#2A2A2A',
     borderRadius: 20,
     marginBottom: 16,
     padding: 12,
     shadowColor: '#000',
-    shadowOpacity: 0.03,
+    shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 1,
+    elevation: 2,
   },
   cardImage: {
     width: 70,
@@ -111,16 +110,16 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#222',
+    color: '#E0E0E0',
   },
   cardAddress: {
     fontSize: 14,
-    color: '#888',
+    color: '#AAAAAA',
     marginTop: 2,
   },
   arrow: {
     fontSize: 28,
-    color: '#d1d1d1',
+    color: '#AAAAAA',
     marginLeft: 8,
     fontWeight: '300',
   },
@@ -132,10 +131,10 @@ const styles = StyleSheet.create({
   emptyImage: {
     width: 220,
     height: 180,
-    tintColor: '#c7d3d1',
+    tintColor: '#2A2A2A',
   },
   emptyText: {
     fontSize: 20,
-    color: COLORS.greyPrimary,
+    color: '#AAAAAA',
   },
 });

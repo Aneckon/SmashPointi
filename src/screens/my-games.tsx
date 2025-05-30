@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/main';
+import {SearchInput} from '../components/search-input';
 
 type MyGamesScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
@@ -23,13 +24,13 @@ const GAME_STATUSES = ['Scheduled', 'Waiting for Players'] as const;
 type GameStatus = (typeof GAME_STATUSES)[number];
 
 const STATUS_COLORS: {[key: string]: string} = {
-  Scheduled: '#B6E6E0',
-  'Waiting for Players': '#FFE6B6',
+  Scheduled: '#4DD0E1',
+  'Waiting for Players': '#FFB74D',
 };
 
-const STATUS_TEXT_COLORS: {[key: string]: string} = {
-  Scheduled: '#21706A',
-  'Waiting for Players': '#A37B00',
+const STATUS_BG_COLORS: {[key: string]: string} = {
+  Scheduled: '#003F4E',
+  'Waiting for Players': '#4E3A00',
 };
 
 type Game = {
@@ -62,19 +63,8 @@ const GameCard = ({
         style={styles.deleteButton}>
         <Text style={styles.deleteButtonText}>×</Text>
       </TouchableOpacity>
-      <View
-        style={{
-          gap: 10,
-          flex: 1,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <View
-          style={{
-            gap: 10,
-            flex: 1,
-          }}>
+      <View style={styles.cardContent}>
+        <View style={styles.cardLeft}>
           <Text style={styles.dateTime}>
             {game.date} {game.time}
           </Text>
@@ -95,12 +85,12 @@ const GameCard = ({
         <View
           style={[
             styles.statusTag,
-            {backgroundColor: STATUS_COLORS[status] || '#E0E3E6'},
+            {backgroundColor: STATUS_BG_COLORS[status] || '#2A2A2A'},
           ]}>
           <Text
             style={[
               styles.statusText,
-              {color: STATUS_TEXT_COLORS[status] || '#6B6B6B'},
+              {color: STATUS_COLORS[status] || '#B0B0B0'},
             ]}>
             {status}
           </Text>
@@ -112,6 +102,7 @@ const GameCard = ({
 
 const MyGamesScreen = () => {
   const [games, setGames] = useState<Game[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation<MyGamesScreenNavigationProp>();
 
   useFocusEffect(() => {
@@ -142,6 +133,22 @@ const MyGamesScreen = () => {
     }
   };
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const filteredGames = games.filter(game => {
+    const searchLower = searchQuery.toLowerCase();
+    const court = courtsData.find(c => c.id === game.courtId);
+
+    return (
+      game.players.some(player => player.toLowerCase().includes(searchLower)) ||
+      game.date.toLowerCase().includes(searchLower) ||
+      game.time.toLowerCase().includes(searchLower) ||
+      court?.name.toLowerCase().includes(searchLower)
+    );
+  });
+
   const renderEmptyState = () => {
     return (
       <View style={styles.emptyState}>
@@ -157,12 +164,16 @@ const MyGamesScreen = () => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => navigation.navigate('CreateGame')}>
-          <Text style={{fontSize: 28, color: '#21706A'}}>+</Text>
+          <Text style={{fontSize: 28, color: '#4DD0E1'}}>+</Text>
         </TouchableOpacity>
       </View>
 
+      <View style={styles.searchContainer}>
+        <SearchInput placeholder="Search games..." onSearch={handleSearch} />
+      </View>
+
       <FlatList
-        data={games}
+        data={filteredGames}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <GameCard game={item} onDelete={handleDeleteGame} />
@@ -178,7 +189,7 @@ const MyGamesScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdf9f4',
+    backgroundColor: '#1A1A1A',
     paddingTop: 60,
   },
   header: {
@@ -186,13 +197,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 24,
-    paddingBottom: 16,
+    paddingBottom: 36,
     position: 'relative',
   },
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#222',
+    color: '#E0E0E0',
     textAlign: 'center',
     flex: 1,
   },
@@ -200,34 +211,35 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 24,
     top: 18,
-    backgroundColor: '#E6F4F1',
+    backgroundColor: '#003F4E',
     borderRadius: 24,
     width: 40,
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 2,
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2A2A2A',
     borderRadius: 18,
     paddingHorizontal: 20,
     paddingVertical: 12,
     marginHorizontal: 20,
     marginVertical: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.03,
-    shadowRadius: 2,
-    elevation: 1,
-    position: 'relative',
+  },
+  cardContent: {
+    gap: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  cardLeft: {
+    gap: 10,
+    flex: 1,
   },
   dateTime: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#222',
+    color: '#E0E0E0',
   },
   playersContainer: {
     marginTop: 4,
@@ -236,16 +248,16 @@ const styles = StyleSheet.create({
   },
   playerName: {
     fontSize: 14,
-    color: '#222',
-    backgroundColor: '#F5F5F5',
+    color: '#E0E0E0',
+    backgroundColor: '#363636',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
     alignSelf: 'flex-start',
   },
   availableSlot: {
-    color: '#6B6B6B',
-    backgroundColor: '#F0F0F0',
+    color: '#AAAAAA',
+    backgroundColor: '#333333',
   },
   statusTag: {
     borderRadius: 16,
@@ -266,17 +278,12 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#222',
+    color: '#E0E0E0',
     marginTop: 24,
-  },
-  emptySubtitle: {
-    fontSize: 15,
-    color: '#6B6B6B',
-    marginTop: 8,
   },
   courtName: {
     fontSize: 14,
-    color: '#6B6B6B',
+    color: '#AAAAAA',
     marginTop: 4,
   },
   deleteButton: {
@@ -285,8 +292,12 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     fontSize: 24,
-    color: '#6B6B6B',
+    color: '#AAAAAA',
     fontWeight: '600',
+  },
+  searchContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 16,
   },
 });
 

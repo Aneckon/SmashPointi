@@ -1,17 +1,17 @@
 import {StyleSheet} from 'react-native';
-import {COLORS} from '../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: '#2A2A2A',
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 12,
     gap: 6,
   },
   input: {
-    color: COLORS.black,
+    color: '#E0E0E0',
+    flex: 1,
   },
 });

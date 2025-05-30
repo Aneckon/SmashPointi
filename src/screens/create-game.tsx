@@ -82,6 +82,7 @@ export const CreateGameScreen = () => {
           month: 'short',
           day: 'numeric',
         }),
+        fullDate: date.toISOString(),
         time: time.toLocaleTimeString(undefined, {
           hour: '2-digit',
           minute: '2-digit',
@@ -208,11 +209,7 @@ export const CreateGameScreen = () => {
                 strokeLinecap="round"
               />
             </Svg>
-            <Text
-              style={[
-                styles.input,
-                {color: court ? COLORS.black : COLORS.greyPrimary},
-              ]}>
+            <Text style={[styles.input, {color: '#E0E0E0'}]}>
               {court ? court.name : 'Select Court'}
             </Text>
             <Svg
@@ -273,7 +270,7 @@ export const CreateGameScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdf9f4',
+    backgroundColor: '#1A1A1A',
   },
   scrollContent: {
     flexGrow: 1,
@@ -296,12 +293,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: '500',
-    color: COLORS.black,
+    color: '#E0E0E0',
   },
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#222',
+    color: '#E0E0E0',
     textAlign: 'center',
     marginBottom: 32,
   },
@@ -312,31 +309,31 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: '#2A2A2A',
     borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 16,
     marginBottom: 8,
     shadowColor: '#000',
-    shadowOpacity: 0.02,
-    shadowRadius: 2,
-    elevation: 1,
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 2,
   },
   input: {
     flex: 1,
     fontSize: 16,
-    color: COLORS.black,
+    color: '#E0E0E0',
     backgroundColor: 'transparent',
   },
   dropdown: {
-    backgroundColor: COLORS.white,
+    backgroundColor: '#2A2A2A',
     borderRadius: 12,
     marginTop: -8,
     marginBottom: 8,
     padding: 8,
     shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
     elevation: 2,
     zIndex: 10,
   },
@@ -344,11 +341,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: '#363636',
   },
   dropdownText: {
     fontSize: 16,
-    color: COLORS.black,
+    color: '#E0E0E0',
   },
   addButton: {
     backgroundColor: '#21706A',
@@ -358,7 +355,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   addButtonText: {
-    color: COLORS.white,
+    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
   },
@@ -368,29 +365,30 @@ const styles = StyleSheet.create({
   opponentItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: '#2A2A2A',
     borderRadius: 12,
     paddingHorizontal: 12,
+    paddingVertical: 8,
     shadowColor: '#000',
-    shadowOpacity: 0.02,
-    shadowRadius: 2,
-    elevation: 1,
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 2,
   },
   opponentName: {
     flex: 1,
     fontSize: 16,
-    color: COLORS.black,
+    color: '#E0E0E0',
   },
   removeButton: {
     padding: 4,
   },
   removeButtonText: {
     fontSize: 20,
-    color: COLORS.greyPrimary,
+    color: '#AAAAAA',
     fontWeight: '600',
   },
   addButtonDisabled: {
-    backgroundColor: COLORS.greyPrimary,
+    backgroundColor: '#363636',
   },
 });
 

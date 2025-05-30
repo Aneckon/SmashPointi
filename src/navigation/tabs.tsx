@@ -19,6 +19,11 @@ export const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: '#1A1A1A',
+          borderTopColor: '#2A2A2A',
+          borderTopWidth: 1,
+        },
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Courts" component={CourtsScreen} />

@@ -3,7 +3,6 @@ import {TextInput, View} from 'react-native';
 import debounce from 'lodash/debounce';
 import {SearchIcon} from '../../assets/svg/search-icon';
 import {styles} from './styles';
-import {COLORS} from '../../constants/colors';
 
 type SearchInputProps = {
   onSearch: (val: string) => void | undefined;
@@ -33,7 +32,7 @@ export const SearchInput = ({onSearch, placeholder}: SearchInputProps) => {
         placeholder={placeholder}
         style={styles.input}
         value={query}
-        placeholderTextColor={COLORS.greyPrimary}
+        placeholderTextColor="#AAAAAA"
         onChangeText={handleChange}
       />
     </View>

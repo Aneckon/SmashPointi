@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#4EC6B7',
+    backgroundColor: '#21706A',
     marginTop: 12,
     borderRadius: 43,
   },
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
   secondary: {
     backgroundColor: 'transparent',
     borderWidth: 2,
-    borderColor: '#4EC6B7',
+    borderColor: '#21706A',
   },
 });
