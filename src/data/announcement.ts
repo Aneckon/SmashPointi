@@ -24,7 +24,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
     availableSlots: 32,
     registeredUsers: 18,
     courtName: 'Main Tennis Center',
-    address: '123 Tennis Court Drive, Sports City, SC 12345',
+    address: 'Calle de la Raqueta 123, Madrid, 28001',
   },
   {
     id: 2,
@@ -36,6 +36,6 @@ export const ANNOUNCEMENTS: Announcement[] = [
     availableSlots: 100,
     registeredUsers: 12,
     courtName: 'Downtown Tennis Complex',
-    address: '456 Court Street, Downtown, DT 67890',
+    address: 'Avenida del Tenis 456, Barcelona, 08001',
   },
 ];

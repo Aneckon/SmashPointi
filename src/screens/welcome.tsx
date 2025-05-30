@@ -12,6 +12,7 @@ import {Button} from '../components/button';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/main';
+import {GameActiveIcon} from '../assets/svg/game-active-icon';
 
 const {width} = Dimensions.get('window');
 
@@ -40,10 +41,24 @@ export const WelcomeScreen = () => {
           </View>
 
           <View style={styles.messageContainer}>
-            <Text style={styles.description}>
-              Connect with players, book courts, and track your progress all in
-              one place
-            </Text>
+            <View style={styles.featureItem}>
+              <View style={styles.featureRow}>
+                <GameActiveIcon />
+                <Text style={styles.featureText}>Connect with players</Text>
+              </View>
+            </View>
+            <View style={styles.featureItem}>
+              <View style={styles.featureRow}>
+                <GameActiveIcon />
+                <Text style={styles.featureText}>Book courts</Text>
+              </View>
+            </View>
+            <View style={styles.featureItem}>
+              <View style={styles.featureRow}>
+                <GameActiveIcon />
+                <Text style={styles.featureText}>Track your progress</Text>
+              </View>
+            </View>
           </View>
         </View>
         <View style={styles.buttonContainer}>
@@ -99,6 +114,7 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     marginBottom: 32,
+    gap: 16,
   },
   welcomeText: {
     fontSize: 28,
@@ -139,17 +155,17 @@ const styles = StyleSheet.create({
   },
   featureItem: {
     backgroundColor: '#2A2A2A',
-    padding: 20,
-    borderRadius: 16,
+    padding: 16,
+    borderRadius: 12,
   },
-  featureTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+  featureRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  featureText: {
+    fontSize: 16,
     color: '#E0E0E0',
-    marginBottom: 4,
-  },
-  featureDescription: {
-    fontSize: 14,
-    color: '#AAAAAA',
+    fontWeight: '500',
   },
 });
