@@ -8,6 +8,7 @@ import {HistoryScreen} from '../screens/history';
 import {WelcomeScreen} from '../screens/welcome';
 import {AnnouncementDetailsScreen} from '../screens/announcement-details-screen';
 import {Announcement} from '../data/announcement';
+import {GameDetailsScreen} from '../screens/game-details';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -17,6 +18,7 @@ export type RootStackParamList = {
   CourtDetails: {courtId: string};
   GameHistory: undefined;
   AnnouncementDetails: {announcement: Announcement};
+  GameDetails: {gameId: string};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -37,6 +39,7 @@ export const MainNavigator = () => {
         name="AnnouncementDetails"
         component={AnnouncementDetailsScreen}
       />
+      <Stack.Screen name="GameDetails" component={GameDetailsScreen} />
     </Stack.Navigator>
   );
 };

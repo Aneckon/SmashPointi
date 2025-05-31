@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -11,25 +11,66 @@ import {
 import {IMAGES} from '../constants/images';
 import {ArrowLeftIcon} from '../assets/svg/arrow-left-icon';
 import {useNavigation} from '@react-navigation/native';
-import {GAME_HISTORY, Game, GameResult} from '../data/history';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ResultChip = ({result}: {result: GameResult}) => {
+const GAMES_STORAGE_KEY = 'games_data';
+
+type GameStatus = 'Completed' | 'Cancelled' | 'Waiting for Players';
+type GameResult = 'Win' | 'Loss';
+
+type Game = {
+  id: string;
+  date: string;
+  time: string;
+  status: GameStatus;
+  result?: GameResult;
+  score?: string;
+  players: string[];
+  courtId: string;
+  fullDate: string;
+  duration?: number;
+  points?: number;
+  notes?: string;
+  shots?: {
+    smash: number;
+    volley: number;
+    bandeja: number;
+    lob: number;
+  };
+};
+
+const ResultChip = ({
+  status,
+  result,
+}: {
+  status: GameStatus;
+  result?: GameResult;
+}) => {
   const getChipStyle = () => {
-    switch (result.toLowerCase()) {
-      case 'won':
+    if (status === 'Cancelled') {
+      return styles.canceledChip;
+    }
+
+    switch (result?.toLowerCase()) {
+      case 'win':
         return styles.wonChip;
-      case 'lost':
+      case 'loss':
         return styles.lostChip;
-      case 'canceled':
-        return styles.canceledChip;
       default:
         return {};
     }
   };
 
+  const getChipText = () => {
+    if (status === 'Cancelled') {
+      return 'Cancelled';
+    }
+    return result || 'Unknown';
+  };
+
   return (
     <View style={[styles.chip, getChipStyle()]}>
-      <Text style={styles.chipText}>{result}</Text>
+      <Text style={styles.chipText}>{getChipText()}</Text>
     </View>
   );
 };
@@ -37,10 +78,14 @@ const ResultChip = ({result}: {result: GameResult}) => {
 const GameItem = ({game}: {game: Game}) => (
   <View style={styles.gameItem}>
     <View style={styles.gameHeader}>
-      <Text style={styles.date}>{game.date}</Text>
-      <ResultChip result={game.result} />
+      <Text style={styles.date}>
+        {game.date} {game.time}
+      </Text>
+      <ResultChip status={game.status} result={game.result} />
     </View>
-    <Text style={styles.opponents}>vs. {game.opponents.join(' & ')}</Text>
+    {game.players.length > 0 && (
+      <Text style={styles.opponents}>{`vs. ${game.players?.join(' & ')}`}</Text>
+    )}
     {game.score && <Text style={styles.score}>{game.score}</Text>}
   </View>
 );
@@ -58,6 +103,36 @@ const EmptyState = () => (
 
 export const HistoryScreen = () => {
   const navigation = useNavigation();
+  const [games, setGames] = useState<Game[]>([]);
+
+  console.log(games);
+
+  useEffect(() => {
+    const loadGames = async () => {
+      try {
+        const storedGames = await AsyncStorage.getItem(GAMES_STORAGE_KEY);
+        if (storedGames) {
+          const parsedGames = JSON.parse(storedGames);
+          // Filter games to show only Completed or Cancelled status
+          const validGames = Array.isArray(parsedGames)
+            ? parsedGames.filter(
+                game =>
+                  game &&
+                  typeof game === 'object' &&
+                  'id' in game &&
+                  (game.status === 'Completed' || game.status === 'Cancelled'),
+              )
+            : [];
+          setGames(validGames);
+        }
+      } catch (error) {
+        console.error('Error loading games:', error);
+        setGames([]);
+      }
+    };
+
+    loadGames();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -70,7 +145,7 @@ export const HistoryScreen = () => {
         <Text style={styles.headerTitle}>Game History</Text>
       </View>
       <FlatList
-        data={GAME_HISTORY}
+        data={games}
         renderItem={({item}) => <GameItem game={item} />}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContainer}
@@ -134,20 +209,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
+    backgroundColor: '#2A2A2A',
   },
   chipText: {
     fontSize: 14,
     fontWeight: '500',
-    color: 'white',
+    color: '#E0E0E0',
   },
   wonChip: {
-    backgroundColor: '#22c55e',
+    backgroundColor: '#21706A',
   },
   lostChip: {
-    backgroundColor: '#ef4444',
+    backgroundColor: '#EF4444',
   },
   canceledChip: {
-    backgroundColor: '#64748b',
+    backgroundColor: '#64748B',
+  },
+  drawChip: {
+    backgroundColor: '#F59E0B',
   },
   emptyState: {
     flex: 1,

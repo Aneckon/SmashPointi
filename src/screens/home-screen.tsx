@@ -16,7 +16,6 @@ import {RootStackParamList} from '../navigation/main';
 import {Announcement, ANNOUNCEMENTS} from '../data/announcement';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {skillLevels} from '../data/levels';
-import {GAME_HISTORY, calculateStats} from '../data/history';
 import {courtsData} from '../data/courts';
 import {CompositeNavigationProp} from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
@@ -34,6 +33,16 @@ type Game = {
   status: string;
   courtId: string;
   notes?: string;
+  result?: 'Win' | 'Loss';
+  score?: string;
+  points?: number;
+  duration?: number;
+  shots?: {
+    smash: number;
+    volley: number;
+    bandeja: number;
+    lob: number;
+  };
 };
 
 type HomeScreenNavigationProp = CompositeNavigationProp<
@@ -41,18 +50,87 @@ type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabParamList>
 >;
 
+const calculateStatsFromGames = (games: Game[]) => {
+  const completedGames = games.filter(game => game.status === 'Completed');
+  const wonGames = games.filter(game => game.result === 'Win');
+
+  const totalPoints = completedGames.reduce(
+    (sum, game) => sum + (game.points || 0),
+    0,
+  );
+
+  const shotCounts = completedGames.reduce(
+    (acc, game) => {
+      if (game.shots) {
+        acc.smash += game.shots.smash;
+        acc.volley += game.shots.volley;
+        acc.bandeja += game.shots.bandeja;
+        acc.lob += game.shots.lob;
+      }
+      return acc;
+    },
+    {smash: 0, volley: 0, bandeja: 0, lob: 0},
+  );
+
+  const favoriteShot = Object.entries(shotCounts).reduce((a, b) =>
+    a[1] > b[1] ? a : b,
+  )[0];
+
+  const calculateBestStreak = (gameList: Game[]) => {
+    let currentStreak = 0;
+    let bestStreak = 0;
+
+    gameList.forEach(game => {
+      if (game.result === 'Win') {
+        currentStreak++;
+        bestStreak = Math.max(bestStreak, currentStreak);
+      } else if (game.result === 'Loss') {
+        currentStreak = 0;
+      }
+    });
+
+    return bestStreak;
+  };
+
+  return {
+    matchesPlayed: completedGames.length,
+    winRate:
+      completedGames.length > 0
+        ? `${Math.round((wonGames.length / completedGames.length) * 100)}%`
+        : '0%',
+    averagePoints:
+      completedGames.length > 0
+        ? (totalPoints / completedGames.length).toFixed(1)
+        : '0',
+    bestStreak: calculateBestStreak(games),
+    totalGames: games.length,
+    favoriteShot: favoriteShot
+      ? favoriteShot.charAt(0).toUpperCase() + favoriteShot.slice(1)
+      : 'None',
+  };
+};
+
 export const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const [user, setUser] = useState({
     name: '',
     level: '',
-    stats: calculateStats(GAME_HISTORY),
+    stats: {
+      matchesPlayed: 0,
+      winRate: '0%',
+      averagePoints: '0',
+      bestStreak: 0,
+      totalGames: 0,
+      favoriteShot: 'None',
+    },
   });
   const [nextGame, setNextGame] = useState<Game | null>(null);
   const [timeUntilGame, setTimeUntilGame] = useState<string>('');
 
   const updateCountdown = useCallback(() => {
-    if (!nextGame) return;
+    if (!nextGame) {
+      return;
+    }
 
     const now = new Date();
     const currentYear = now.getFullYear();
@@ -123,6 +201,12 @@ export const HomeScreen = () => {
             const now = new Date();
             const currentYear = now.getFullYear();
 
+            // Calculate stats from stored games
+            setUser(prevUser => ({
+              ...prevUser,
+              stats: calculateStatsFromGames(games),
+            }));
+
             const upcomingGame = games
               .filter(game => {
                 const gameDate = parse(
@@ -132,7 +216,11 @@ export const HomeScreen = () => {
                 );
                 const [hours, minutes] = game.time.split(':').map(Number);
                 gameDate.setHours(hours, minutes);
-                return gameDate > now;
+                return (
+                  gameDate > now &&
+                  (game.status === 'Waiting for Players' ||
+                    game.status === 'Scheduled')
+                );
               })
               .sort((a, b) => {
                 const dateA = parse(
@@ -171,7 +259,7 @@ export const HomeScreen = () => {
 
   const handleNextGamePress = () => {
     if (nextGame) {
-      navigation.navigate('Games');
+      navigation.navigate('GameDetails', {gameId: nextGame.id});
     }
   };
 
