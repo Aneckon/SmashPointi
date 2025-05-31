@@ -13,6 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/main';
 import {GameActiveIcon} from '../assets/svg/game-active-icon';
+import {IMAGES} from '../constants/images';
 
 const {width} = Dimensions.get('window');
 
@@ -27,20 +28,16 @@ export const WelcomeScreen = () => {
       <ScrollView contentContainerStyle={styles.content}>
         <View>
           <View style={styles.heroSection}>
-            <Image
-              source={{
-                uri: 'https://www.bluecoatsports.co.uk/wp-content/uploads/2024/11/padel-balls-and-racket.jpg',
-              }}
-              style={styles.heroImage}
-              resizeMode="cover"
-            />
-            <View style={styles.overlay}>
-              <Text style={styles.title}>SmashPoint</Text>
-              <Text style={styles.subtitle}>Your Padel Community</Text>
-            </View>
+            <Image source={IMAGES.logo} style={styles.heroImage} />
           </View>
 
           <View style={styles.messageContainer}>
+            <View style={styles.featureItem}>
+              <View style={styles.featureRow}>
+                <GameActiveIcon />
+                <Text style={styles.featureText}>Your Padel Community</Text>
+              </View>
+            </View>
             <View style={styles.featureItem}>
               <View style={styles.featureRow}>
                 <GameActiveIcon />
@@ -92,25 +89,6 @@ const styles = StyleSheet.create({
   heroImage: {
     width: '100%',
     height: '100%',
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 42,
-    fontWeight: '800',
-    color: '#FFFFFF',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 20,
-    color: '#E0E0E0',
-    textAlign: 'center',
   },
   messageContainer: {
     marginBottom: 32,

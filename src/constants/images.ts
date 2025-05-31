@@ -10,4 +10,5 @@ export const IMAGES = {
   img6: require('../assets/images/img6.jpeg'),
   img7: require('../assets/images/img7.jpg'),
   img8: require('../assets/images/img8.jpg'),
+  logo: require('../assets/images/logo.png'),
 };
