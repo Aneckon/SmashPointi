@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   heroSection: {
-    height: width * 0.8,
+    height: width * 0.4,
     borderRadius: 24,
     overflow: 'hidden',
     marginBottom: 32,
