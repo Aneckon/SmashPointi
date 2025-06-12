@@ -6,7 +6,7 @@ import LottieView from "lottie-react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {Dimensions, Linking, Pressable, Alert, SafeAreaView, StyleSheet, View, Modal, Button, TouchableOpacity} from "react-native";
 import AppleAdsAttribution from "@vladikstyle/react-native-apple-ads-attribution";
-import MainApp from './App';
+import MainApp from './src/App';
 import {createStackNavigator} from '@react-navigation/stack';
 import moment from "moment/moment"
 import {NavigationContainer} from '@react-navigation/native';
