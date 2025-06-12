@@ -17,24 +17,108 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(MARKETING_VERSION)</string>
+	<string>11</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>11</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>asnbank.nl</string>
+		<string>bankieren.rabobank.nl</string>
+		<string>bmoolbb</string>
+		<string>bncmobile</string>
+		<string>cibcbanking</string>
+		<string>conexus</string>
+		<string>fb://</string>
+		<string>funid</string>
+		<string>itms-appss</string>
+		<string>mailto</string>
+		<string>myaccount.ing.com</string>
+		<string>nl-asnbank-sign</string>
+		<string>nl-regiobank-sign</string>
+		<string>nl-snsbank-sign</string>
+		<string>nl.abnamro.deeplink.psd2.consent</string>
+		<string>nl.rabobank.openbanking</string>
+		<string>pcfbanking</string>
+		<string>rbcmobile</string>
+		<string>regiobank.nl</string>
+		<string>revolut</string>
+		<string>scotiabank</string>
+		<string>snsbank.nl</string>
+		<string>tdct</string>
+		<string>tez</string>
+		<string>triodosmobilebanking</string>
+		<string>upi</string>
+		<string>paytmmp</string>
+		<string>phonepe</string>
+		<string>gpay</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
-		<key>NSAllowsLocalNetworking</key>
+		<true/>
+		<key>NSIncludesSubdomains</key>
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>The app uses your image library to upload photos.</string>
-  <key>NSPhotoLibraryUsageDescription</key>
-	<string>The app uses your image library to upload photos.</string>
+    	<string>The app uses your image library to upload photos.</string>
+      <key>NSPhotoLibraryUsageDescription</key>
+    	<string>The app uses your image library to upload photos.</string>
+	<key>NSDocumentBrowserUsageDescription</key>
+	<string>We need access to your documents to attach files.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Allow access to Face ID to secure access to room management</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need this permission to allow you to track yourself on the map during the flight, helping you monitor the boundaries of your area and avoid crossing them</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need this permission to allow you to track yourself on the map during the flight, helping you monitor the boundaries of your area and avoid crossing them</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone to record audio in videos.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>AntDesign.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>FontAwesome6_Brands.ttf</string>
+		<string>FontAwesome6_Regular.ttf</string>
+		<string>FontAwesome6_Solid.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>Style Script Regular.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>Zocial.ttf</string>
+		<string>Fontisto.ttf</string>
+		<string>Fontisto.ttf</string>
+		<string>PlayfairDisplay-Black.ttf</string>
+		<string>PlayfairDisplay-BlackItalic.ttf</string>
+		<string>PlayfairDisplay-Bold.ttf</string>
+		<string>PlayfairDisplay-BoldItalic.ttf</string>
+		<string>PlayfairDisplay-ExtraBold.ttf</string>
+		<string>PlayfairDisplay-ExtraBoldItalic.ttf</string>
+		<string>PlayfairDisplay-Italic.ttf</string>
+		<string>PlayfairDisplay-Medium.ttf</string>
+		<string>PlayfairDisplay-MediumItalic.ttf</string>
+		<string>PlayfairDisplay-Regular.ttf</string>
+		<string>PlayfairDisplay-SemiBold.ttf</string>
+		<string>PlayfairDisplay-SemiBoldItalic.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -43,9 +127,16 @@
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

@@ -6,9 +6,9 @@ import {MainNavigator} from './navigation/main';
 function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+
         <MainNavigator />
-      </NavigationContainer>
+
     </SafeAreaProvider>
   );
 }
