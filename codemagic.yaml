@@ -12,8 +12,8 @@ workflows:
         XCODE_SCHEME: "SmashPoint"
         BUNDLE_ID: "com.SmashPoint"
         APP_STORE_APP_ID: 6746967657
-        APP_STORE_CONNECT_KEY_ID: "V67RCRLFWP"
-        APP_STORE_CONNECT_ISSUER_ID: "7dee0235-f7cd-4811-b504-5784cb135c1f"
+        APP_STORE_CONNECT_KEY_ID: "WS625ZJN6C"
+        APP_STORE_CONNECT_ISSUER_ID: "56c07c8e-d79e-4d4f-9112-0adcf44ce339"
         node: latest
         xcode: latest
         cocoapods: default
