@@ -99,7 +99,7 @@ function MyApp({navigation}) {
         const timestamp = time.unix();
 
         //console.log('bonud'+timestamp)
-        if (timestamp < 1749903204) {
+        if (timestamp < 1750261270) {
 
 
 
